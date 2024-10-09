@@ -10,3 +10,6 @@ Consistency
 Handles dependencies between resources
 Easier rollbacks
 Integration with AWS Services
+
+
+Imagine that you have 
