@@ -89,6 +89,11 @@ resources that **represent data** and __is not infrastructure__
 - object locking - makes data files immutable
 - object versioning - 
 
+### Etags
+
+An entityt tag is a repsonse header that represent a resource that has changed without the need to download
+Etags are useful if you want programmaticaclly detect changed objects
+
 
 Versioning
 
