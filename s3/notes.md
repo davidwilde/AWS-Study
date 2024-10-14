@@ -95,6 +95,18 @@ An entityt tag is a repsonse header that represent a resource that has changed w
 Etags are useful if you want programmaticaclly detect changed objects
 
 
+### Checksums 
+
+A checksum is used to check the sum (amount) of data to ensure the data integrity of a file.
+If daat is downloaded and if in-transit data is loss or mangled the checksum will determine this is something wrong with the file.
+
+Amazon S3 offers the folliwng checksum algorithms:
+
+ - CRC32
+ - CRC32C
+ - SHA1
+ - SHA256
+
 Versioning
 
 

@@ -4,4 +4,4 @@ I'm trying to get my AWS Solutions Architect Associate Certification (SAA-C03) b
 
 For reference, the complete repo is at https://github.com/ExamProCo/AWS-Examples/
 
-I'm currently at https://youtu.be/c3Cn4xYfxJY?si=-pMh1fC5k149urik&t=19355
+I'm currently at https://youtu.be/c3Cn4xYfxJY?si=dtekLu99fDeTkDy2 
