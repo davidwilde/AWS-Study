@@ -108,7 +108,7 @@ Amazon S3 offers the folliwng checksum algorithms:
  - SHA256
 
 
- ### Metadata
+## Metadata
 
 provides information about other data but not the contents itself
 
@@ -139,6 +139,81 @@ E.g.
 - x-amz-meta-encryption: "AES-256"
 - x-amz-meta-camera-model: "Canon EOS 5D"
 
+
+## S3 Object Lock
+
+Prevents the deletion of objects in a bucket
+Needed for companies that need to prevent objects being deleted to have:
+
+- data integrity
+- regulatory compliance
+
+WORM - write once read many
+
+Only through the AWS API
+
+
+## Amazon S3 Bucket URI
+
+s3://mybucket/filename.txt
+
+## AWS S3 CLI
+
+### aws s3
+
+A high-level way to interact with S3 buckets and objects
+
+### aws s3api
+
+A low level way to interact with S3 buckets and objects
+
+### aws s3control
+
+Managing s3 access points, S3 outposts buckets, S3 batch operations, storage lens.
+
+### aws s3outposts
+
+Manage endpoints for S3 outposts
+
+
+## S3 Request Styles
+
+When making requests by using the REST API there are two styles of request:
+
+1. Virtual hosted style requests - the bucket name is a subdomain on the host
+2. Path-style requests - the bucket name is in the request path
+
+***Path style URLs will be discontinued in the future***
+
+## Dualstack Endpoints
+
+There are two possible endpoints when accessing Amazon S3 API. Dualstack handles both IPV4 and PV6 traffic
+
+Standard and Dualstack
+
+https://s3.dualstack.us-east-2.amazonaws.com
+
+At one point AWS only offered IPV4 and Dualstack is designed as its future replacement since PIV4 addresses are running out and IPV6 has a larger public address space.
+
+## Storage classes
+
+Durability - 11 9s (99.99999999%)
+
+S3 Standard - fast, availabel and durable
+ - availability - 4 9s
+ - redundency - 3 or more zones
+ - retrieval time - milliseconds
+ - high throughput - frequently accessed
+ - scalability - easily scales to storage size and number of requests
+ - use cases - wide range
+S3 Reduced Redundancy Storage (RRS) legacy storage class
+S3 Intelligent Tiering - Uses ML to anylyze object usage and determine storage class
+S3 Express One-Zone single digit ms performance, special bucket type, one AZ, 50% less than standard cost
+S3 Standard-IA (infrequent access) fast, cheaper if you access less than once a month. Extar fee to retrieve. 50% less than standard (reduced availability)
+S3 One-Zone-IA - Fast object only exist in one AZ. Cheaper than standard IA by 20% less
+S3 Glacier Instant Retrieval - for long-term cold storage. Get data instantly
+S3 Glacier Flexible Retrieval - takes minutes to hours to get data
+S3 Glacier Deep Archive - lowest storage class. Data retrieval time is 12 hours
 
 Versioning
 
