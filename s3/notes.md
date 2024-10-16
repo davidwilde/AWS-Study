@@ -107,6 +107,39 @@ Amazon S3 offers the folliwng checksum algorithms:
  - SHA1
  - SHA256
 
+
+ ### Metadata
+
+provides information about other data but not the contents itself
+
+useful for
+ - categorising and organising data
+ - providing contents about data
+
+you can attach metadata to S3 objects at anything
+
+there are
+- system defined
+- user defined
+
+System defined metadata is data that only amazon can control. 
+
+E.g. 
+- content type
+- cache control
+- content disposition
+- content encoding
+- content-language
+- Expires
+- X-amz-website-redirection-location
+
+User defined is set by the user. It must start with **x-amz-meta-**
+
+E.g.
+- x-amz-meta-encryption: "AES-256"
+- x-amz-meta-camera-model: "Canon EOS 5D"
+
+
 Versioning
 
 
