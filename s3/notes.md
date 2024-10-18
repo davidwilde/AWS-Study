@@ -207,13 +207,87 @@ S3 Standard - fast, availabel and durable
  - scalability - easily scales to storage size and number of requests
  - use cases - wide range
 S3 Reduced Redundancy Storage (RRS) legacy storage class
+ - Was cheaper
+ - Standard now cheaper than RRS
+ - No cost benefit to customers
 S3 Intelligent Tiering - Uses ML to anylyze object usage and determine storage class
+- automatically moves objects into different storage tiers to reduce storage costs, but charges a low month cost for object monitoring and automation
+- frequent access tier automatic - the default tier objects remain here as long as they are being accessed
+- infrequent access tier - automatic - if object is not accessed after 30 days its moved here
+- archive instant access tier - automatic - if object is not accessed after 90 days its moved here
+- archive access tier - optional - after activation if object into accessed after 90 days
+- deep archive access tier - optional - if object is not accessed after 180 days
+- Has additional cost to analyze your objects for 30 days.
+
 S3 Express One-Zone single digit ms performance, special bucket type, one AZ, 50% less than standard cost
 S3 Standard-IA (infrequent access) fast, cheaper if you access less than once a month. Extar fee to retrieve. 50% less than standard (reduced availability)
+ - 11 9s of durability
+ - availability 39s - slower availability than S3 standard
+ - 50% cheaper  __as long as you are not accessing file more than onec a month__
+ - Retrieval time within milliseconds
+ - scalability easily scales to storage size and number of requests like S3 standard
+ - Use cases - data that is accessed less frequently but requires quick access when needed, such as disaster recovery, backups, or long-term data stores where data is not frequently accessed.
+ - Pricing
+ Storage per GB
+ Per Requests
+ Has Retrieval fee
+ Has a minimum storage duration charge of 30 days
+
 S3 One-Zone-IA - Fast object only exist in one AZ. Cheaper than standard IA by 20% less
+ - 11 9s of durability like S3 Standard
+ - lower availability: 99.5% Since its in a single AZ it has even lower availability than Standard IA
+ - 20% cheaper than standard IA
+ - Data stored in 1 availability zones there is a risk of data loss in case of AZ disaster
+ - Use case - Ideal for secondary backup copies of on-prem data, or for storing data than can be recreated in the even of an AAZ failure. It's also suitable for storing infrequently accessed data that is non mission critical
+ - Pricing storage per GB, per requests, has retrieval fee, has minimum storage duration charge of 30 days
+
 S3 Glacier Instant Retrieval - for long-term cold storage. Get data instantly
+ - storage class designed for rarely accessed data that still needs immediate access in performance-sensitive use cases.
+ - High durability 11 9s just like S3 standard
+ - High availability 3 9s of availability like S3 standard IA
+ - cost effective storage. 68% lower cost than Standard IA
+ - for long lived data than is accessed once per quarter
+ - retrieval time: within milliseconds (low latency)
+ - use cases - rarely access data that needs immediate access e.g. image hosting, online file-sharing applications, medical imaging and health records, news media assets, and satellite and aerial imaging.
+ - pricing: storage per GB, per requests, has retrieval fee, has minimum storage duration charge of 90 days
+ - does not require a vault
+
 S3 Glacier Flexible Retrieval - takes minutes to hours to get data
+ - formerly S3 Glacier
+ - combines S3 and Glacier into a single set of APIs.
+ - considerably faster than Glacier vault based storage
+ - 3 retrieval tiers
+ - expediated tier 1-5 mins limited to 250MB archive size, 
+ - standard tier 3-5 hours. No archive size limit. 
+ - bulk tier 5-12 hours. No archive size limit, even petabytes of data
+ - you pay per GB and number of requests
+ - archived objects will have an additional 40KBs of data. 32KB for archive index and archive metadata information
+ - 8KB for the name of the object
+ - You should stored fewer and larger files e.g. zip files
+
 S3 Glacier Deep Archive - lowest storage class. Data retrieval time is 12 hours
+ - Combines S3 and Glacier into a single set of APIs. More cost effective than S3 glacier flexible but a greater cost of retrieval
+ - standrad tier 12-48 hours. No archive limit. Default option
+ - Bulk tier 12-48 hours. No archive size limit, even petabytes worth of data
+
+## Security
+Bucket Policies: Define permissions for an entire S3 bucket using JSON-based access policy language.
+Access Contrrol Lists (ACLs): Provide a legacy method to manage access permissions on individual objects and buckets.
+AWS PrivateLink for Amazon S3: Enables private network access to S3, bypassing the public internet for enhanced security.
+Cross-Origin Resource Sharing (CORS): Allows restricted resources on a web page from another domain to be requested.
+Amazon S3 Block Public Access: Offers settings to easily block public access to all your S3 resources.
+IAM Access Analyzer for S3: Analyzes resource policies to help identify and mitigate potential access risks.
+Internetwork Traffic Privacy: Ensures data privacy by encrypting data moving between AWS services and the Internet.
+Object Ownership: Manages data ownership between AWS accounts when objects are uploaded to S3 buckets.
+Access Points: Simplifies managing data access at scale for shared datasets in S3.
+Access Grants: Providing access to S3 data via a directory services e.g. Active Directory
+Versioning: Preserves, retrieves and restores every version of every object stored in an S3 bucket
+MFA Delete: Adds an additional layer of security by requiring MFA for the deletion of S3 objects.
+Object Tags: Provides a way to categorize storage by assigning key-value pairs to S3 objecs.
+In transit Encryption: Protects data by encrypting it as it travels to and from S3 over the internet.
+Server-Side encryption: Automatically encrypts data when writing it to S3 and decrypts it after downloading
+Compliance Validation for Amazon S3: Ensures S3 services meet compliance requirements like HIPAA, GDPR etc
+Infrastructure Security: Protects the underlying nifrastructure of the S3 service, ensuring data integrity and availability.
 
 Versioning
 
