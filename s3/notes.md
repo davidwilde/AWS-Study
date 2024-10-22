@@ -289,6 +289,37 @@ Server-Side encryption: Automatically encrypts data when writing it to S3 and de
 Compliance Validation for Amazon S3: Ensures S3 services meet compliance requirements like HIPAA, GDPR etc
 Infrastructure Security: Protects the underlying nifrastructure of the S3 service, ensuring data integrity and availability.
 
+Block Public Access is a safety feature that is enabled by default to block all public access to an S3 bucket
+Unrestricted access to S3 is the #1 security misconfiguration
+
+The are four options:
+
+- New Access control lists (ACLs)
+- Any Access Control Lists
+- 
+
+### Access Control Lists (ACLs)
+
+This is a legacy feature of S3 and there are more robust ways to porvide cross-account access via bucket policies and access points.
+Need to know for the exam. 
+
+grand basic read/write permissions to other AWS accounts
+
+- you can grant permissions only to other AWS accounts
+- you cannot grant permissions to users in your account
+- you cannot grant conditional permissions
+- you cannot explicitly deny permissions
+
+
+### Bucket policies
+
+S3 Buckt Policy is resourc-based policy to grant an s3 buckt and bucket objects to other principles e.g. AWS Accounts, Users, AWS services
+
+- Only allow a specific rol to read objects with prod object tag
+- restrict access to specific IP
+
+
+
 Versioning
 
 
