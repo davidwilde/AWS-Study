@@ -318,6 +318,64 @@ S3 Buckt Policy is resourc-based policy to grant an s3 buckt and bucket objects 
 - Only allow a specific rol to read objects with prod object tag
 - restrict access to specific IP
 
+#### S3 bucket policies vs IAM policies
+
+S3 bucket policies have ovelapping functionality as an IAM policy that grant access to S3.
+S3 Bucket policies proivde convenience over IAM policies granting S3 access.
+
+- S3 Bucket Policy 
+
+Provides access to aspecific buckte and its objecs
+You can specify mulitple principal to grant access
+
+Bucket policies can be 20 KB in size
+
+Block Pbilc Access is turend on by defalut and will DENY all anon access even if the bucket policy grant its unless the feature is turned off
+
+- IAM Policy
+
+Provides access to many AWS services
+Can provide permissions for multiple buckets in one policy
+
+The principal by default is the entity the IAM policy is attached to
+
+IAM policy sizes are limited based on the principal:
+
+Users 2KB
+Groups 5KB
+Roles 10KB
+
+#### IAM ACcess Analyzer for S3
+
+will alert you when your S3 buckets are exposed to the Internet or other AWS Accounts
+
+You need to create an analyzer
+
+#### Internework traffic privacy
+
+keeping data private as it travels across different networks
+
+AWS PrivateLink (VPC Interface Endpoints)
+- Allows you to connect an Elastic Network Interface (ENI) directly to other AWS Services eg S3, EC2, Lamda.
+- can connect to 3rd praty services via AWS Marketplace
+- can go cross account
+- fine grained permissions via VPC endpoint policies
+- No charge for using
+
+VPC Gateway Endpoint
+- Allows you to ocnnect a VPC directly to S3 (or DynamoDB) staying private within the internal AWS Network.
+- VPC Gateway Endpoint can not go cross-account
+- Does not have fine grain permissions
+- No charge though
+
+
+#### CORS
+
+HTTP header to allow a server to indicate any other origins than its own from which a browser should permit loading of accounts
+
+Allowss you to set CORS configuration to a S3 bucket with static website hosting so different origins can perform HTP requests from your S3 Static website.
+
+The CORS configuration can be in either JSON or XML
 
 
 Versioning
