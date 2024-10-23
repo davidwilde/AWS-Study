@@ -381,7 +381,24 @@ The CORS configuration can be in either JSON or XML
 Versioning
 
 
-Encryption
+## Encryption
+
+Encrypotion in Transit - data that is secure when moving betweeen locations
+Algorithms: TLS, SSL
+
+This encryption ensures that data remains confidential and cannot be intercepted or viewed by unauthorized parties while in transit.
+
+Data will be encrypted sender-side. Data will be decrypted server-side
+
+
+TLS - Transport Layer Security
+An encryption protocol for data integrity between two or more communicating computer application.
+TLS 1.0, 1.1 are deprecated. TLS 1.2 and TLS 1.3 is the current best practice
+
+SSL - Secure sockets layers
+An encryption protocol for data integrity between two or more communicating computer application.
+SSL 1.0, 2.0 and 3.0 are deprecated
+
 
 
 Website hosting
