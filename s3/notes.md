@@ -399,6 +399,67 @@ SSL - Secure sockets layers
 An encryption protocol for data integrity between two or more communicating computer application.
 SSL 1.0, 2.0 and 3.0 are deprecated
 
+S3 Server side encryption - is **always on** for all new S3 objects.
+
+### SSE-S3
+
+Amazon S3 manages the keys, encrypts using AES-GCM (256-bit algorithm)
+S3 encypts each object with a unique key
+S3 uses envelope encryption
+S3 rotates regularly key automatically
+By default all objects will have SSE-S3 applied
+There is no additonal charge for using
+Uses 256bit advanced encyption
+
+
+### SSE-KMS 
+
+Amazon Key Management Service and you maneg the keys
+You first create a KMS managed key
+KMS can automatically rotate keys
+KMS key poily controls who can decrypt using the key
+KMS can help meet regulatory compliance
+Have their own addiotal costs
+Must be in the same region as the bucket
+To upload with KMS you need kms:GenerateDataKey
+To download with KMS you need kms:Decrypt
+
+BUcket key can be set for SSE-KMS for improved performance
+
+### SSE-C - Customer provided key
+
+You provide your own encryption key that Amazon S3 then uses to apply AES-256
+You need to provide the encryption key everytime you retrieve objects
+The encryption key you upload is removed from Amazon S3 memory after each request
+No additonal charge to use
+Amazon S3 will store a randomly salted Hash-bashed Message Authentication Code (HMAC) of your encryption key to validate future requests
+Presigned URLs support SSE-C
+
+With bucket versioning different object versions can be encrypted with different keys
+You manage encyption keys on the client side, you manage any additional safeguards, such as key rotation on the client side
+
+
+### DDSE-KMS - Dual layer server-side encryption. 
+
+Encrypts cliennt side than server side.
+Datas is encrypted twice
+The key for client-ide encyption comes from KMS
+No additional charges for DSSE and KMS keys
+
+*Encrypt* 
+client side requests AWS KMS to generate a data encryption key using CMK
+KMS sends two versions of the DEK to you: a plaintext version and an encrypted version
+You use plaintext DEK to encrypt your data locally and then discards it from memory
+Encrypted version of the DEK is stored alongside the encrypted data in Amazon S3
+
+*Decrypt*
+You retriev the encrypted data and the associated encrypted DEK
+You send the encrypted DEK to AWS KMS, which decrypts it using the corresponding CMK and returns the plaintext DEK
+Use this plaintext DEK to decrypt the data locally and then discard the DEK from memory
+
+_Service side encryption only encrypts the contents of an object, not its metadata_
+
+
 
 
 Website hosting
