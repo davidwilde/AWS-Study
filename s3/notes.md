@@ -378,8 +378,44 @@ Allowss you to set CORS configuration to a S3 bucket with static website hosting
 The CORS configuration can be in either JSON or XML
 
 
-Versioning
+## Versioning
 
+allow you to store multiple versions of S3 objects
+
+### with versioning you can recover more easily from unintended user actions and application failures
+### versioning-enabled buckets can help you recover objects from accidental deletion or overwrite
+
+- store all versions of an object in S3 at the same object key address
+- by default S3 versioning is disabled on buckets, and you must explicity enable it
+- once enabled, it cannot be disabled, only suspended on the bucket
+- fully integrates with S3 lifecycle rules
+- MFA delete feature provides extra protection against deletion of your data
+
+Buckets can be in one of 3 states
+1. unversioned (default)
+2. versioned
+3. versioned suspended
+
+### S3 lifecyle
+
+allows you to automate the storage class changes, archival or deletion of objects
+
+set up your own rules
+
+- can be used with versioning
+- can be applied to both current and previous versions
+
+E.g. after 7 days move to glacier, after 365 perm delete
+
+Rule actions:
+- move current versions of objects between storage classes
+- move non-current versions of objects between storage classes
+- expire current versions of objects
+- perm delete noncurrent versions of objects
+- delete expired object delete markers or incomplete multipart uploads
+
+Lifecyle filters:
+- filter based on prefix
 
 ## Encryption
 
@@ -460,6 +496,126 @@ Use this plaintext DEK to decrypt the data locally and then discard the DEK from
 _Service side encryption only encrypts the contents of an object, not its metadata_
 
 
+## Data consistency
 
+When data being kept in different place and wether the data exactly match or do not match
+
+### Strongly consistent
+every time request data you can expect consistent data to be returned with x time (1 sec)
+
+_We will never return to you old data. But you will have to wait at least 2 secs for the query to return_
+
+### Eventually Consistent
+When you request data you may get back inconsistent data within 2 secs.
+
+_We are giving you whatever data is currently in the database, you may get new data or old data, but if you wait a little bit longer it will generally be up to date_
+
+__Amazon S3 offers *strong consistency* for all read, write, and delete operations__
+(Prior to Jan 2020, S3 did not have strong consistency for all S3 operations)
+
+## Object replication
+
+Can help you do the following:
+
+- replicate objects while retaining metadata
+- replicate objects into different storage clases
+- maintain object copies under different ownership
+- keep objects stored over multiple AWS Regions
+- Replicate objects within 15 minutes
+- Sync buckets, replicate existing objects, and replicate previously failed or replicated objects
+- replicate objects and fail over to a bucket in another AWS region
+
+Options
+- Cross region replication (live)
+- Same region replication (live)
+- Bi-directional replication (live)
+- S3 batch replication (on-demand)
+
+
+## Presigned URLs
+
+provide temporary access to upload or download object data via URL
+
+Commonly used to provide access to private objects
+
+You can use AWS CLI or AWS SDK to generate a presigned URL
+
+aws s3 presign s3://mybucket/myobject --expires-in 300
+
+
+## Object lambda access points
+
+allow you to transform the output requests of S3 objects when you want to present data differently.
+
+E.g. hiding personally identifiable information
+
+S3 object lambda access points only operates on the outputted objects, the original objects in the S3 bucket remain unmodified
+
+Can be performed on the operations:
+- HEAD
+- GET
+- LIST
+
+
+## Mountpoint for Amazon S3
+
+allows you to mount an S3 bucket to your linux local file system
+
+an open-source client that you install on your Linux OS and provides high throughput access to objects with basic file-system ops
+
+Can:
+- read files up to 5TB
+- list and read existing files
+- create new files
+
+Cannot / does not:
+- modify existing files
+- delete directories
+- support symlinks
+- support file locking
+
+Can be used in the following storage classes:
+- S3 standard
+- S3 standard IA
+- S3 one-zone IA
+- Reduced redundancy storage (legacy)
+- S3 Glacier instant retrieval
+
+## Requesters Pays
+
+bucket option allows the bucket owner to *offset specific S3 costs to the requester* (the user requesting the data)
+
+Bucket owner still pays data storage cost
+
+For when you want to share data but not incur the charges associated with others accessing the data
+
+e.g.
+- Collaborative Projects
+- Client data storage
+- Shared educational resources. 
+- Content distribution
+
+Can enable anytime using a toggle
+
+After enabling:
+
+- all requests must authenticate
+- requester assumes an IAM role before making their request (The IAM policy will have a s3:RequestPayer condition)
+- anonymous access to that bucket is not allowed
+
+
+Requesters must include `x-amz-request-payer` in their API request header for DELETE, GET, HEAD, POST and PUT requests or as a parameter in a REST request
+
+(presumably so that they are confirming that they are happy to be charged for the retrieval)
+
+Troubleshooting:
+
+A 403 Forbidden request HTTP Error code will occur in the following scenarios:
+- The requester doesn't include the parameter x-amz-request-payer
+- request authentication fails (something is wrong with the IAM role or IAM policy)
+- the request is anonymous
+- The request is a SOAP request
+
+When a 403 occurs, no charge will occurs to the requester. No charge will occur to the bucket owner
 
 Website hosting
