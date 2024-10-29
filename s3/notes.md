@@ -618,4 +618,120 @@ A 403 Forbidden request HTTP Error code will occur in the following scenarios:
 
 When a 403 occurs, no charge will occurs to the requester. No charge will occur to the bucket owner
 
-Website hosting
+## AWS Marketplace
+
+Provides alternatives to AWS services that work with Amazon S3
+
+Veeam is an alternative for backup
+Or DataDog, Splunk, Dynatrace
+
+## S3 Batch operations
+
+Large-scale batch operations on Amazon S3 objects (billions of objects containing exabytes of data)
+
+## Amazon S3 Inventory
+
+takes inventory of objects in an S3 bucket on a repeating schedule so you have an audit history of object changes
+
+will output the inventory into the destination.
+
+## Amozon S3 Select
+
+lets you use SQL to filter the contents of S3 objects.
+Works on CSV, JSON , Apache Parquet
+works with objects that are compressed with GZIP, BZIP2 (for CSV and JSON objects only)
+works on objects that are serverside encrypted
+
+You can get results back in JSON or CSV
+
+It can be used in the following storage classes:
+
+- S3 Standard
+- S3 Intelligent-Tiering
+- S3 Standard IA
+- S3 One-Zone IA
+- S3 Glacier Instant Retrieva
+
+
+## S3 Event Notifications
+
+allows your bucket to notify other AWS Services about s3 event data
+
+makes application integration very easy for S3
+
+Notifications events
+
+- New object created events
+- Object removal events
+- Restore object events
+- Reduced Redundancy Storage (RRS) object lost events
+- Replication events
+- S3 Lifecycle expiration events
+- S3 Lifecycle transition events
+- S3 Intelligent-Tiering automatic archival events
+- Object tagging events
+- Object ACL PUT events
+
+Possible destination to other AWS Services
+- Amazon Simple Notification Service (SNS) topics
+- Amazon Simple Queue Service (SQS) ques (FIFO noot supported)
+- AWS Lambda function
+- Amazon EventBridge
+
+## Storage class analysis
+
+allows you to analyze storage access patterns of objects within a bucket to recommend objects to move between STANDARD to STANDARD_IA. 
+
+More cost-effective than tiered 
+
+## Storage Lens
+
+analysis tool for S3 buckets across your entire AWS org
+- how much storage you have across your org
+- which are the fast growing buckets and prefixes
+- identify cost-optimization opportunities
+- implement data-protection and access-management best practices
+- improve the performance of application workloads
+
+- can be exported as CSV or Parquet to another S3 bucket
+- usage and metrics can be exported to Amazon CloudWatch
+
+## S3 Static Website Hosting
+
+allows you to host and serve a static website from an S3 bucket
+
+Do not support HTTPS
+- Amazon CloudFront must be used to serve HTTPS traffic
+- Will provide a website endpoint 
+
+http://bucket-name.s3-website-region.amazonaws.com
+http://bucket-name.s3-website.region.amazonaws.com
+
+Two hosting types:
+
+- host a static website
+- redirect requests to objects
+
+S3 Multipart upload
+
+You can upload a single object in a set of parts.
+In case of network fail you just need to reupload the missing parts
+ONce you start a multipart upload, you can upload parts at any time, there is no expiry time to upload
+You can upload files while you're creating a file
+
+For files +100MB multipart upload is recommended
+
+Byte range fetching allows you to fetch a range of bytes of data from S3 Objecs using the Range header during S3 GetObject API requests
+
+- concurrent connections
+
+
+## Interoperability
+
+- the capability of cloud services to exchanges and utilize information seamlessly with each other
+
+Common AWS services that often dump data into S3:
+
+Amazon EC2: stores snapshots and backups in S3
+Amazon RDS: Backups and data exports to S3
+AWS CloudTrail: Storeas API call logs in S3
