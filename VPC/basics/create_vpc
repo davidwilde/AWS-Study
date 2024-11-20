@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Create our VPC
+VPC_ID=$(aws ec2 create-vpc \
+--cidr-block "172.1.0.0/16" \
+--tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=my-vpc-3}]' \
+--region eu-west-1 \
+--query Vpc.VpcId \
+--output text)
+
+echo $VPC_ID
+
+# Turn on DNS Hostnames
+aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-hostnames "{\"Value\":true}"
+
+# Create an IGW (Internet Gateway)
+IGW_ID=$(aws ec2 create-internet-gateway \
+--query InternetGateway.InternetGatewayId \
+--output text
+)
+
+# attach  an IGW
+aws ec2 attach-internet-gateway --internet-gateway-id $IGW_ID --vpc-id $VPC_ID
+
+# Create a new subnet
+
+SUBNET_ID=$(aws ec2 create-subnet --vpc-id $VPC_ID --cidr-block 172.1.0.0/20 --query Subnet.SubnetId)
+
+## auto assign IPv4 addresses
+aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
+
+
+# explicitly associate subnet
+RT_ID=$(aws ec2 describe-route-tables \
+--filters "Name=vpc-id,Values=$VPC_ID" "Name=association.main,Values=true" \
+--query "RouteTables[].RouteTableId[]" \
+--output text)
+
+--route-table-id $RT_ID \
+
+
+# add a route for our RT to our IGW
+aws ec2 create-route --route-table-id $RT_ID \
+--destination-cidr-block 0.0.0.0/0 \
+--gateway-id $IGW_ID

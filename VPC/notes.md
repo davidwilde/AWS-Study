@@ -34,7 +34,7 @@ Acts as a **stateless** virtual firewall for compute within a VPC. Operates at t
 
 ### Security groups 
 
-Acts as stateful virtual 
+Acts as stateful virtual firewall for compute within a VPC operates at the instance level with allow rules
 
 ### Public subnets
 Subnets allow instances to have public IP addresses
